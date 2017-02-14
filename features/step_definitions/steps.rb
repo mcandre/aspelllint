@@ -3,6 +3,7 @@ Given(/^the program has finished$/) do
   @cucumber_ignores = `aspelllint -i '*.md' examples/`
   @cucumber_stdin = `aspelllint < examples/toy-boats.txt`
   @cucumber_stat = `aspelllint -s examples/`
+  @cucumber_personal = `aspelllint -p ./examples/.aspell.en.pws examples/toy-boats.txt`
 end
 
 Then(/^the output is correct for each test$/) do
@@ -26,6 +27,9 @@ Then(/^the output is correct for each test$/) do
   expect(json['findings'].length).to eq(2)
   expect(json['findings'][0]['location']['path']).to match('examples/nested/memo.md')
   expect(json['findings'][1]['location']['path']).to match('examples/toy-boats.txt')
+
+  lines_personal = @cucumber_personal
+  expect(lines_personal.length).to eq(0)
 end
 
 def valid_json?(json)

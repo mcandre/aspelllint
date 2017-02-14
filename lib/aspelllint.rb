@@ -130,9 +130,11 @@ module Aspelllint
     end
   end
 
-  def self.check(filename, original_name = filename, is_stat = false)
+  def self.check(filename, original_name = filename, is_stat = false, personal = nil)
     fail 'aspell not found in PATH' unless executable_in_path?('aspell')
-    output = `sed 's/#/ /g' "#{filename}" 2>&1 | aspell -a -c 2>&1`
+    options = "-p #{personal}" if personal
+    output = `sed 's/#/ /g' "#{filename}" 2>&1 | aspell -a -c #{options} 2>&1`
+
     fail('aspell failed: ' << output) unless $CHILD_STATUS.success?
 
     lines = output.split("\n").select { |line| line =~ /^\&\s.+$/ }

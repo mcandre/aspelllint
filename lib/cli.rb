@@ -40,6 +40,7 @@ Arguments:
 
 Options:
   -i --ignore <pattern>  Ignore file pattern (fnmatch)
+  -p --personal <file>   Personal dictionary
   -s --stat              Output in STAT
   -v --version           Print version info
   -h --help              Print usage info
@@ -69,6 +70,9 @@ module Aspelllint
         dotignore = '.aspelllintignore',
         additional_ignores = ignores
       )
+
+      personal = options['--personal']
+
       finding_count = 0
       dotsmack.enumerate(filenames).each do |filename, _|
         begin
@@ -76,9 +80,9 @@ module Aspelllint
             Aspelllint::check_stdin
           else
             if !is_stat
-              Aspelllint::check(filename)
+              Aspelllint::check(filename, filename, is_stat, personal)
             else
-              Aspelllint::check(filename, filename, is_stat ) { |finding|
+              Aspelllint::check(filename, filename, is_stat, personal ) { |finding|
                 puts STAT_HEADER if finding_count == 0
                 puts ',' if finding_count > 0
                 print JSON.pretty_generate(finding).lines.map { |line| '    ' + line }.join
