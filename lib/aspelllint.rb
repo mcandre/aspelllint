@@ -81,34 +81,18 @@ class Misspelling
   end
 
   def to_finding
-    {
-        :failure => true,
-        :rule => 'Spelling error',
-        :description => "Observed word: #{word}",
-        :categories => [
-            'Bug Risk'
-        ],
-        :location => {
-            :path => "#{filename}",
-            :beginLine => "#{line}",
-        },
-        :fixes => generate_fixes
+    finding = StatModule::Finding.new(true, 'Spelling error', "Observed word: #{word}")
+    finding.categories = ['Bug Risk']
+    location = StatModule::Location.new("#{@filename}")
+    location.begin_line = line.to_i
+    finding.location = location
+    suggestions.split(', ').each { |w|
+      fix = StatModule::Fix.new(location)
+      fix.new_text = w
+      finding.fixes.push(fix)
     }
+    finding
   end
-    def generate_fixes
-      f = []
-      suggestions.split(', ').each { |w|
-        f <<
-          {
-                :location => {
-                    :path => "#{filename}",
-                    :beginLine => "#{line}",
-                },
-                :newText => "#{w}"
-            }
-      }
-      return f
-    end
 end
 
 module Aspelllint

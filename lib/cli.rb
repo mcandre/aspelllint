@@ -6,27 +6,7 @@ require 'dotsmack'
 
 require 'docopt'
 require 'json'
-
-STAT_HEADER = <<-eos
-{
-  "statVersion": "0.4.0",
-  "process": {
-    "name": "Spell check for large projects",
-    "version": "#{Aspelllint::VERSION}",
-    "description": "Aspelllint searches your projects for spelling errors",
-    "maintainer": "Andrew Pennebaker",
-    "email": "andrew.pennebaker@gmail.com",
-    "website": "https://github.com/mcandre/aspelllint",
-    "repeatability": "Associative"
-  },
-  "findings": [
-eos
-
-STAT_FOOTER = <<-eos
-
-  ]
-}
-eos
+require 'stat'
 
 USAGE = <<DOCOPT
 Usage:
@@ -73,7 +53,7 @@ module Aspelllint
 
       personal = options['--personal']
 
-      finding_count = 0
+      findings = []
       dotsmack.enumerate(filenames).each do |filename, _|
         begin
           if filename == '-'
@@ -83,10 +63,7 @@ module Aspelllint
               Aspelllint::check(filename, filename, is_stat, personal)
             else
               Aspelllint::check(filename, filename, is_stat, personal ) { |finding|
-                puts STAT_HEADER if finding_count == 0
-                puts ',' if finding_count > 0
-                print JSON.pretty_generate(finding).lines.map { |line| '    ' + line }.join
-                finding_count += 1
+                findings.push(finding)
               }
             end
           end
@@ -99,8 +76,17 @@ module Aspelllint
         end
       end
 
-      if is_stat && finding_count > 0
-        puts STAT_FOOTER
+      if is_stat && findings.length > 0
+        process = StatModule::Process.new('Aspellint')
+        process.version = "#{Aspelllint::VERSION}"
+        process.description = 'Aspelllint searches your projects for spelling errors.'
+        process.maintainer = 'Andrew Pennebaker'
+        process.email = 'andrew.pennebaker@gmail.com'
+        process.website = 'https://github.com/mcandre/aspelllint'
+        process.repeatability = 'Associative'
+        stat = StatModule::Stat.new(process)
+        stat.findings = findings
+        puts stat.to_json
       end
 
     rescue Docopt::Exit => e
