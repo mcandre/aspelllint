@@ -83,7 +83,7 @@ class Misspelling
   def to_finding
     finding = StatModule::Finding.new(true, 'Spelling error', "Observed word: #{word}")
     finding.categories = ['Bug Risk']
-    location = StatModule::Location.new("#{@filename}")
+    location = StatModule::Location.new(@filename.to_s)
     location.begin_line = line.to_i
     finding.location = location
     suggestions.split(', ').each { |w|
