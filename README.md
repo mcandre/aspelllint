@@ -94,6 +94,7 @@ aspelllint is a shell wrapper around the traditional GNU [aspell](http://aspell.
 * [editorconfig-tools](https://www.npmjs.com/package/editorconfig-tools)
 * [shlint](https://rubygems.org/gems/shlint)
 * [shellcheck](http://hackage.haskell.org/package/ShellCheck)
+* [stank](https://github.com/mcandre/stank) (e.g. `go get github.com/mcandre/stank/...`)
 
 # INSTALL
 
