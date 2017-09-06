@@ -2,14 +2,17 @@
 
 root = true
 
-# bash8
+# Most text files
 [*]
 charset = utf-8
-end_of_line = lf
 insert_final_newline = true
 trim_trailing_whitespace = true
 max_line_length = none
 indent_style = space
+
+# bash8
+[{*.py,*.sh,*.bash,*.ksh,*.zsh,*.csh,*.tcsh,*.dash,*.fish}]
+end_of_line = lf
 indent_size = 4
 
 # Lexer restrictions
@@ -19,14 +22,11 @@ indent_style = tab
 indent_style = space
 
 # Natural HTML nesting
-[{*.js}]
+[*.js]
 quote_type = single
 
-# Poetry
-[{*.txt,*.md}]
-indent_size = none
-[{*.lisp,*.lsp,*.scm,*.el,*.rkt,*.abcl,*.ccl,*.clisp,*.ecl,*.sbcl,.eclrc,.sbclrc,*.m,*.mm}]
-indent_size = none
+[*.min.js]
+insert_final_newline = false
 
 # Windows junk
 [{*.cmd,*.bat,*.reg,*.ps1,*.vbs,*.cs,*.fs,*.fsx,*.ahk}]
@@ -41,7 +41,7 @@ indent_size = 2
 indent_size = 2
 [{*.html,*.css,*.less,*.scss,*.styl,*.php,*.tex}]
 indent_size = 2
-[{*.yml,*.yaml,*.xml}]
+[{*.yml,*.yaml}]
 indent_size = 2
 [{*.ps1,*.ahk,.emacs,.vimrc}]
 indent_size = 2
@@ -49,11 +49,11 @@ indent_size = 2
 indent_size = 2
 [{*.c,*.h,*.cpp,*.rs,*.d,*.swift,*.vala,*.sac}]
 indent_size = 2
-[{*.asm,*.s,*.ll}]
+[{*.asm,*.ll}]
 indent_size = 2
 [{*.pl,*.pm,*.f08,*.j,*.lua,*.st,*.io,*.pas,*.oz}]
 indent_size = 2
-[{*.hs,*.ml,*.v,*.sml,*.fs,*.fsx,*.ma,*.psql,*.R}]
+[{*.hs,*.cabal,*.ml,*.v,*.sml,*.fs,*.fsx,*.ma,*.psql,*.R}]
 indent_size = 2
 [{*.awk,*.erl,*.escript,*.yaws,*.bf,*.bs,*.cob,*.factor,*.tcl,*.rl}]
 indent_size = 2
