@@ -4,7 +4,7 @@ Aspelllint searches your projects for spelling errors.
 
 # EXAMPLES
 
-```
+```console
 $ cat examples/nested/memo.md
 # Announcing Casual Fribsday!
 
@@ -90,18 +90,17 @@ aspelllint is a shell wrapper around the traditional GNU [aspell](http://aspell.
 
 ## Optional
 
-* [pargs](https://github.com/mcandre/pargs)
-* [editorconfig-cli](https://github.com/amyboyd/editorconfig-cli) (e.g. `go get github.com/amyboyd/editorconfig-cli`)
-* [flcl](https://github.com/mcandre/flcl) (e.g. `go get github.com/mcandre/flcl/...`)
-* [shlint](https://rubygems.org/gems/shlint)
-* [shellcheck](http://hackage.haskell.org/package/ShellCheck)
+* [make](https://www.gnu.org/software/make/)
+* [GNU findutils](https://www.gnu.org/software/findutils/)
 * [stank](https://github.com/mcandre/stank) (e.g. `go get github.com/mcandre/stank/...`)
+* [Python](https://www.python.org) 3+ (for yamllint)
+* [Node.js](https://nodejs.org/en/) (for eclint)
 
 # INSTALL
 
 Install via [RubyGems](http://rubygems.org/):
 
-```
+```console
 $ gem install aspelllint
 ```
 
@@ -115,7 +114,7 @@ FreeBSD
 
 Keep the interface working:
 
-```
+```console
 $ cucumber
 ```
 
@@ -123,7 +122,7 @@ $ cucumber
 
 Keep the code tidy:
 
-```
+```console
 $ rake lint
 ```
 
