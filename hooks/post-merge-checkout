@@ -13,6 +13,8 @@
 #
 # rm .git/hooks/post-merge
 # rm .git/hooks/post-checkout
+set -eEuo pipefail
+IFS=$'\n\t '
 
 #
 # git_modified $1
