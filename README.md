@@ -58,7 +58,6 @@ $
 $ aspelllint -h
 Usage: aspelllint [options] [<files>|-]
 -i, --ignore pattern             Ignore file pattern (fnmatch)
--s, --stat                       Output in STAT
 -h, --help                       Print usage info
 -v, --version                    Print version info
 ```
@@ -84,7 +83,7 @@ aspelllint is a shell wrapper around the traditional GNU [aspell](http://aspell.
 
 # REQUIREMENTS
 
-* [ruby](https://www.ruby-lang.org/) 2.3+
+* [ruby](https://www.ruby-lang.org/) 2.7+
 * [aspell](http://aspell.net/)
 * [sed](http://www.gnu.org/software/sed/)
 

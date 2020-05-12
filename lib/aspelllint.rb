@@ -79,20 +79,6 @@ class Misspelling
     def to_s
         "#{filename}:#{line}:#{column} #{word}: #{suggestions}"
     end
-
-    def to_finding
-        finding = StatModule::Finding.new(true, 'Spelling error', "Observed word: #{word}")
-        finding.categories = ['Bug Risk']
-        location = StatModule::Location.new(@filename.to_s)
-        location.begin_line = line.to_i
-        finding.location = location
-        suggestions.split(', ').each { |w|
-            fix = StatModule::Fix.new(location)
-            fix.new_text = w
-            finding.fixes.push(fix)
-        }
-        finding
-    end
 end
 
 module Aspelllint
@@ -114,7 +100,7 @@ module Aspelllint
         end
     end
 
-    def self.check(filename, original_name = filename, is_stat = false, personal = nil)
+    def self.check(filename, original_name = filename, personal = nil)
         fail 'aspell not found in PATH' unless executable_in_path?('aspell')
         options = "-p #{personal}" if personal
         output = `sed 's/#/ /g' "#{filename}" 2>&1 | aspell -a -c #{options} 2>&1`
@@ -124,12 +110,6 @@ module Aspelllint
         lines = output.split("\n").select { |line| line =~ /^\&\s.+$/ }
         misspellings = lines.map { |line| Misspelling.parse(original_name, line) }
 
-        if is_stat
-            misspellings.each { |finding|
-                yield finding.to_finding if block_given?
-            }
-        else
-            misspellings.each { |m| puts m }
-        end
+        misspellings.each { |m| puts m }
     end
 end
